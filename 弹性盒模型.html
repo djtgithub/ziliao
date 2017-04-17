@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+
+  /*水平垂直方向都居中
+
+#div1{
+    width: 300px;
+    height: 300px;
+    border: 1px #000 solid;
+    display: flex;
+    
+  }
+  #div2{
+    width: 100px;
+    height: 100px;
+    background: red;
+    margin: auto;
+  }
+
+<div id="div1">
+    <div id="div2"></div>
+  </div>
+  轴排列
+
+  */
+  #div1{
+  	width: 300px;
+    height: 300px;
+  	border: 1px #000 solid;
+    display: flex;
+      /*flex-direction: row;默认 水平从左到右*/
+    /*flex-direction: row-reverse; 水平从右边开始向左边排列*/
+  	/* flex-direction: column;垂直从上到下排列 flex-direction: column-reverse;垂直从下到上排列*/
+    /*justify-content: flex-start; 默认水平从左到右 排列justify-content: flex-end; 水平从右到左排列
+    justify-content: center; 居中
+     justify-content: space-between;对空白地方平均分配挨着左右端点
+     justify-content: space-around; 不挨着左右平均分配
+     侧轴对齐 跟主轴相反的轴就是侧轴
+     （flex-direction: column;
+    justify-content: space-around;可以配合使用）
+    */
+   flex-direction: row;
+   justify-content:center;
+   align-items: center;
+  }
+   #div1 div{
+    width: 50px;
+    height: 50px;
+    background: red;
+  
+  }
+	</style>
+</head>
+<body>
+	<div id="div1">
+    <div id="div2">1</div>
+    <div id="div2">2</div>
+    <div id="div2">3</div>
+	</div>
+</body>
+</html>
