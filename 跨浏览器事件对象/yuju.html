@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>fileReader读取文件</title>
+</head>
+<body>
+<a  id="mybtn" value="tijiao" href="1.html">sdf</a>
+<input type="file" id="files-list" >
+<progress id="progress"></progress>
+<output id="output"></output>
+
+	<script>
+	var EventUtil={
+		addHandler:function(element,type,handler){
+			if(element.addEventListener){ //w3c
+				element.addEventListener(type,handler,false);
+			}else if(element.attachEvent){ //ie
+				element.attachEvent('on'+type,handler);
+			}else{ //其他的
+				element["on"+type]=handler;
+			}
+		},
+		removehandler:function(element,type,handler){
+			if(element.removeEventListener){
+				element.removeEventListener(type,handler,false);
+			}else if(element.detachEvent){
+				element.detachEvent('on'+type,handler);
+			}else{
+				element["on"+type]=null;
+			}
+
+		},
+		getEvnet:function(evnet){ //获取兼容的事件
+			return event ?event:window.event;
+
+		},
+		getTarget:function(event){ //跨浏览器获取目标元素
+			return event.target || event.srcElement;
+		},
+		preventDefault:function(event){ //阻止默认事件
+			if(event.preventDefault){
+				event.preventDefault();
+			}else{
+				event.returnValue=false;
+			}
+		},
+		stopPropagation:function(event){ //阻止事件冒泡
+			if(event.stopPropagation){
+				event.stopPropagation();
+			}else{
+				event.cancelBubble=true;
+			}
+		}
+	}
+window.onload=function(){
+
+/*
+
+
+	var btn=document.getElementById("mybtn");
+	btn.onclick=function(event){
+	
+		alert(event.type)
+	}
+	EvnetUtil.addHandler(btn,'click',function(){
+		// alert(EvnetUtil.getTarget(event))
+		EvnetUtil.preventDefault(event)
+		console.log(EvnetUtil.getTarget(event))
+	},false)
+ */
+
+var filesList=document.getElementById("files-list");
+EventUtil.addHandler(filesList,"change",function(event){
+	var info='',
+	output=document.getElementById("output");
+	progress=document.getElementById("progress");
+	files=EventUtil.getTarget(event).files,
+	type="default",
+	reader= new FileReader();
+	if(/image/.test(files[0].type)){
+		reader.readAsDataURL(files[0]);
+		type="image";
+
+	}else{
+		reader.readAsText(files[0],"GBK");
+		type="text";
+	}
+	reader.onerror=function(){
+		output.innerHTML="Could not read file,error code is" +reader.error.code;
+	}
+	reader.progress=function(event){
+		if(event.lengthComputable){
+			progress.innerHTML=event.loaded+"/"+event.total;
+		}
+	};
+	reader.onload=function(){
+		var html='';
+		switch(type){
+			case "image":
+			html="<img src=\""+reader.result+"\">";
+			console.log(reader.result)
+			break;
+			case "text":
+			html=reader.result;
+			break;
+		}
+		output.innerHTML=html;
+	};
+});
+
+}
+	</script>
+</body>
+</html>
